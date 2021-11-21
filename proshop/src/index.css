@@ -3,3 +3,6 @@ main{
   margin-top:5rem;
   text-align: center;
 }
+.rating span{
+  margin: 5px;
+}
