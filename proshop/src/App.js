@@ -2,7 +2,8 @@
 import {Fragment} from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import {Container} from 'react-bootstrap'
+
+import HomeScreen from './screens/HomeScreen';
 
 function App() {
   return (
@@ -10,9 +11,7 @@ function App() {
    <Fragment>
      <Header/>
      <main>
-       <Container>
-       <h2>Welcome to shop App</h2>
-       </Container>
+       <HomeScreen/>
       
     </main>
       <Footer/>
