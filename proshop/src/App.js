@@ -13,11 +13,13 @@ function App() {
    <BrowserRouter>
      <Header/>
      <main>
-     <Container>
+      <Container>
         <Route path="/" component={HomeScreen} exact/>
         <Route path="/products/:id" component={ProductScreen}/>
+        
        
       </Container>
+      
       
     </main>
       <Footer/>
