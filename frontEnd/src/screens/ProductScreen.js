@@ -1,30 +1,39 @@
-import React from 'react';
-import Products from '../products';
+import React,{useState,useEffect} from 'react';
+
 import Rating from '../components/Rating';
 import {Row,Col,Image,ListGroup,Card,Button} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
-
+import axios from 'axios';
 
 const ProductScreen = ({match}) => {
-    const product=Products.find(product=>product._id===match.params.id)
+    
+    const [Product,setProduct]=useState({});
+
+    useEffect(()=>{
+      const getProducts=async()=>{
+        const {data}=await axios.get(`/api/products/${match.params.id}`)
+        setProduct(data);
+    }
+    getProducts()
+    },[match.params.id])
 
     return (
         <>
            <Link className="btn btn-dark my-3" to="/">Go Back</Link>
            <Row>
              <Col md={6}>
-             <  Image src={product.image} fluid/>
+             <  Image src={Product.image} fluid/>
              </Col>
              <Col md={3}>
                <ListGroup variant="flush">
                  <ListGroup.Item>
-                   <h3>{product.name}</h3>
+                   <h3>{Product.name}</h3>
                  </ListGroup.Item>
                  <ListGroup.Item>
-                   <Rating value={product.rating} text={`${product.numReviews} reviews`}/>
+                   <Rating value={Product.rating} text={`${Product.numReviews} reviews`}/>
                  </ListGroup.Item>
                  <ListGroup.Item>
-                   {product.description}
+                   {Product.description}
                  </ListGroup.Item>
                  
                  
@@ -34,13 +43,13 @@ const ProductScreen = ({match}) => {
                <Card>
                  <ListGroup variant="flush">
                    <ListGroup.Item>
-                     Price: $ <strong>{product.price}</strong>
+                     Price: $ <strong>{Product.price}</strong>
                    </ListGroup.Item>
                    <ListGroup.Item>
-                     {product.countInStock>0?'In Stock':'Out Of Stock'}
+                     {Product.countInStock>0?'In Stock':'Out Of Stock'}
                    </ListGroup.Item>
                    <ListGroup.Item>
-                     <Button variant="dark" disabled={product.countInStock===0}>
+                     <Button variant="dark" disabled={Product.countInStock===0}>
                        Add to Cart
                      </Button>
                    </ListGroup.Item>
