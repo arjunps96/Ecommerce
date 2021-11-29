@@ -8,16 +8,19 @@
     "start": "node backEnd/server",
     "client": "npm start --prefix frontEnd",
     "server": "nodemon backEnd/server",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "seeder:import": "nodemon backEnd/seeder",
+    "export": "nodemon backEnd/seeder -d"
   },
   "author": "Arjun",
   "license": "ISC",
   "dependencies": {
-    
+    "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
     "concurrently": "^6.4.0",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "express-async-handler": "^1.2.0",
     "mongoose": "^6.0.13",
     "nodemon": "^2.0.15"
   }
