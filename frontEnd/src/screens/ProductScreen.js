@@ -1,21 +1,21 @@
-import React,{useState,useEffect} from 'react';
-
+import React,{useEffect} from 'react';
+import {useDispatch,useSelector} from 'react-redux'
 import Rating from '../components/Rating';
 import {Row,Col,Image,ListGroup,Card,Button} from 'react-bootstrap';
+
+import {getproductDetails} from '../actions/productActions';
+
 import {Link} from 'react-router-dom';
-import axios from 'axios';
+
 
 const ProductScreen = ({match}) => {
     
-    const [Product,setProduct]=useState({});
+    const dispatch=useDispatch(getproductDetails());
+    const Product=useSelector(state=>state.productDetails.product);
 
     useEffect(()=>{
-      const getProducts=async()=>{
-        const {data}=await axios.get(`/api/products/${match.params.id}`)
-        setProduct(data);
-    }
-    getProducts()
-    },[match.params.id])
+      dispatch(getproductDetails(match.params.id))
+    },[match.params.id,dispatch])
 
     return (
         <>
