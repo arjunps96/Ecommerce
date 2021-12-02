@@ -1,17 +1,22 @@
-import React,{useEffect} from 'react';
+import React,{useEffect,useState} from 'react';
 import {useDispatch,useSelector} from 'react-redux'
 import Rating from '../components/Rating';
-import {Row,Col,Image,ListGroup,Card,Button} from 'react-bootstrap';
+import {Row,Col,Image,ListGroup,Card,Button, FormControl} from 'react-bootstrap';
 
 import {getproductDetails} from '../actions/productActions';
 
 import {Link} from 'react-router-dom';
 
 
-const ProductScreen = ({match}) => {
-    
-    const dispatch=useDispatch(getproductDetails());
+const ProductScreen = ({match,history}) => {
+   
+    const [Qty,setQty]=useState(1)
+    const dispatch=useDispatch();
     const Product=useSelector(state=>state.productDetails.product);
+
+    const addtocartHandler=()=>{
+        history.push(`/cart/${match.params.id}?qty=${Qty}`)
+    }
 
     useEffect(()=>{
       dispatch(getproductDetails(match.params.id))
@@ -48,8 +53,18 @@ const ProductScreen = ({match}) => {
                    <ListGroup.Item>
                      {Product.countInStock>0?'In Stock':'Out Of Stock'}
                    </ListGroup.Item>
+                   {Product.countInStock&&<ListGroup.Item>
+                     <Row>
+                       <Col className="py-2">Qty</Col>
+                       <Col>
+                        <FormControl as="select" value={Qty} onChange={(e)=>setQty(e.target.value)}>
+                          {[...Array(Product.countInStock).keys()].map(x=><option key={x+1} value={x+1}>{x+1}</option>)}
+                        </FormControl>
+                       </Col>
+                     </Row>
+                    </ListGroup.Item>}
                    <ListGroup.Item>
-                     <Button variant="dark" disabled={Product.countInStock===0}>
+                     <Button variant="dark" disabled={Product.countInStock===0} onClick={addtocartHandler}>
                        Add to Cart
                      </Button>
                    </ListGroup.Item>
