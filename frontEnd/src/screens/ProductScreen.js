@@ -5,6 +5,8 @@ import {Row,Col,Image,ListGroup,Card,Button, FormControl} from 'react-bootstrap'
 
 import {getproductDetails} from '../actions/productActions';
 
+
+
 import {Link} from 'react-router-dom';
 
 
@@ -16,6 +18,7 @@ const ProductScreen = ({match,history}) => {
 
     const addtocartHandler=()=>{
         history.push(`/cart/${match.params.id}?qty=${Qty}`)
+        
     }
 
     useEffect(()=>{
