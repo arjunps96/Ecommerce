@@ -13,6 +13,8 @@ import {
   USER_UPDATE_PROFILE_REQUEST,
   USER_UPDATE_PROFILE_SUCCESS,
   USER_UPDATE_PROFILE_FAIL,
+  USER_SAVE_SHIPPING_ADDRESS,
+  CART_SAVE_PAYMENT_METHOD,
 } from "../constants/constants";
 
 export const userLogin = (email, password) => async (dispatch) => {
@@ -105,4 +107,16 @@ export const userUpdateProfile = (user) => async (dispatch, getState) => {
       payload: error.response ? error.response.data.message : error.message,
     });
   }
+};
+
+export const userShippingAddress = (data) => async (dispatch) => {
+  dispatch({ type: USER_SAVE_SHIPPING_ADDRESS, payload: data });
+
+  localStorage.setItem("shippingAddress", JSON.stringify(data));
+};
+
+export const cartSavePayment = (data) => async (dispatch) => {
+  dispatch({ type: CART_SAVE_PAYMENT_METHOD, payload: data });
+
+  localStorage.setItem("PaymentMethod", JSON.stringify(data));
 };

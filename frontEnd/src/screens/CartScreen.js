@@ -99,9 +99,9 @@ const CartScreen = ({ match, history, location }) => {
           <ListGroup.Item>
             <Button
               className="btn-block"
-              onClick={() => history.push("/login?checkout")}
+              onClick={() => history.push("/shipping")}
             >
-              Proceed to payment
+              Proceed to Checkout
             </Button>
           </ListGroup.Item>
         </ListGroup>

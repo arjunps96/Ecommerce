@@ -36,7 +36,7 @@ const ProfileScreen = ({ history }) => {
     if (password !== confirmPassword) {
       setMessage("Password and confirm password should be same");
     } else {
-      dispatch(userUpdateProfile({ id: user._id, name, email, password }));
+      dispatch(userUpdateProfile({ name, email, password }));
     }
   };
 
@@ -50,14 +50,14 @@ const ProfileScreen = ({ history }) => {
         {success && (
           <Message variant={"success"}>Profile updated successfully!</Message>
         )}
-        <Form onSubmit={formSubmitHandler}>
+        <Form onSubmit={(e) => formSubmitHandler(e)}>
           <Form.Group controlId="name">
             <Form.Label>Name</Form.Label>
             <Form.Control
-              type="name"
-              placeholder="Enter name"
-              value={name}
+              type="text"
+              placeholder="Enter the username"
               onChange={(e) => setName(e.target.value)}
+              value={name}
             />
           </Form.Group>
 
@@ -66,8 +66,8 @@ const ProfileScreen = ({ history }) => {
             <Form.Control
               type="email"
               placeholder="Enter user email address"
-              value={email}
               onChange={(e) => setEmail(e.target.value)}
+              value={email}
             />
           </Form.Group>
           <Form.Group controlId="password">
