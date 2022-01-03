@@ -14,7 +14,12 @@ import {
 } from "../reducers/userReducer";
 import thunk from "redux-thunk";
 import { cartReducer } from "../reducers/cartReducer";
-import { orderReducer, orderDetailsReducer } from "../reducers/orderReducers";
+import {
+  orderReducer,
+  orderDetailsReducer,
+  orderPayReducer,
+  ordermyListReducer,
+} from "../reducers/orderReducers";
 
 const reducer = combineReducers({
   productList: productReducer,
@@ -26,6 +31,8 @@ const reducer = combineReducers({
   userUpdateProfile: userUpdateProfileReducer,
   orderItems: orderReducer,
   orderDetails: orderDetailsReducer,
+  orderPay: orderPayReducer,
+  orderMyList: ordermyListReducer,
 });
 const currentCartItems = localStorage.getItem("cartItems")
   ? JSON.parse(localStorage.getItem("cartItems"))

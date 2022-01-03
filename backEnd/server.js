@@ -31,6 +31,11 @@ app.use("/api/products", ProductRoutes);
 app.use("/api/user", UserRoutes);
 app.use("/api/orders", OrderRoutes);
 
+app.get("/api/paypal/clientId", async (req, res) => {
+  const clientID = process.env.PAYPAL_CLIENT_ID;
+  res.send(clientID);
+});
+
 app.use(notFound)
 app.use(genralError)
 
