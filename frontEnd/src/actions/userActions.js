@@ -15,6 +15,8 @@ import {
   USER_UPDATE_PROFILE_FAIL,
   USER_SAVE_SHIPPING_ADDRESS,
   CART_SAVE_PAYMENT_METHOD,
+  USER_UPDATE_PROFILE_RESETS,
+  ORDER_MY_LIST_RESET,
 } from "../constants/constants";
 
 export const userLogin = (email, password) => async (dispatch) => {
@@ -40,6 +42,8 @@ export const userLogin = (email, password) => async (dispatch) => {
 
 export const userLogout = () => (dispatch) => {
   localStorage.removeItem("userInfo");
+  dispatch({ type: USER_UPDATE_PROFILE_RESETS });
+  dispatch({ type: ORDER_MY_LIST_RESET });
   dispatch({ type: USER_LOGOUT });
 };
 
