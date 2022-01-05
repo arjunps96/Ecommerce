@@ -43,6 +43,16 @@ const Header = ({ history }) => {
                 </Nav.Link>
               </LinkContainer>
             )}
+
+            {userInfo && userInfo.isAdmin && (
+              <NavDropdown title={"Admin Screen"}>
+                <LinkContainer to="/admin/users">
+                  <NavDropdown.Item>Users</NavDropdown.Item>
+                </LinkContainer>
+
+                <NavDropdown.Item>delete</NavDropdown.Item>
+              </NavDropdown>
+            )}
           </Nav>
         </Container>
       </Navbar>
