@@ -68,11 +68,7 @@ export const updateOrderPayAction =
           Authorization: `Bearer ${token}`,
         },
       };
-      const { data } = await axios.put(
-        `/api/orders/${orderId}/pay`,
-        paymentRequest,
-        config
-      );
+      await axios.put(`/api/orders/${orderId}/pay`, paymentRequest, config);
 
       dispatch({ type: ORDER_PAY_SUCCESS });
     } catch (error) {

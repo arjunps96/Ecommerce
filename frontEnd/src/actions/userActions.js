@@ -17,6 +17,10 @@ import {
   CART_SAVE_PAYMENT_METHOD,
   USER_UPDATE_PROFILE_RESETS,
   ORDER_MY_LIST_RESET,
+  USER_LIST_REQUEST,
+  USER_LIST_SUCCESS,
+  USER_LIST_FAIL,
+  USER_LIST_RESET,
 } from "../constants/constants";
 
 export const userLogin = (email, password) => async (dispatch) => {
@@ -44,6 +48,7 @@ export const userLogout = () => (dispatch) => {
   localStorage.removeItem("userInfo");
   dispatch({ type: USER_UPDATE_PROFILE_RESETS });
   dispatch({ type: ORDER_MY_LIST_RESET });
+  dispatch({ type: USER_LIST_RESET });
   dispatch({ type: USER_LOGOUT });
 };
 
@@ -123,4 +128,25 @@ export const cartSavePayment = (data) => async (dispatch) => {
   dispatch({ type: CART_SAVE_PAYMENT_METHOD, payload: data });
 
   localStorage.setItem("PaymentMethod", JSON.stringify(data));
+};
+
+export const getAllUsers = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: USER_LIST_REQUEST });
+    const { token } = getState().user.userInfo;
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const { data } = await axios.get("/api/user", config);
+
+    dispatch({ type: USER_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: USER_LIST_FAIL,
+      payload: error.response ? error.response.data.message : error.message,
+    });
+  }
 };
