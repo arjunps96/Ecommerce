@@ -7,6 +7,7 @@ import { generateToken } from "../utils/GenerateToken.js";
 
 export const userAuth = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
+
   const user = await User.findOne({ email });
 
   if (user && (await user.matchPassword(password))) {
@@ -38,8 +39,23 @@ export const getUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
+export const getUserByID = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id).select("-password");
+
+  if (user) {
+    res.status(200).json({
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+    });
+  } else {
+    throw new Error("Invalid user");
+  }
+});
+
 export const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, isAdmin } = req.body;
   const userExists = await User.findOne({ email });
   if (userExists) {
     res.status(400);
@@ -49,6 +65,7 @@ export const registerUser = asyncHandler(async (req, res) => {
     name,
     email,
     password,
+    isAdmin,
   });
 
   if (newUser) {
@@ -67,7 +84,7 @@ export const registerUser = asyncHandler(async (req, res) => {
 
 export const updateUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
-  console.log(user, req.body);
+
   if (user) {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
@@ -91,9 +108,43 @@ export const updateUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
+export const updateUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+
+  if (user) {
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+    user.isAdmin = req.body.isAdmin;
+
+    const updatedUser = await user.save();
+
+    res.status(200).json({
+      id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      isAdmin: updatedUser.isAdmin,
+    });
+  } else {
+    res.status(400);
+    throw new Error("No users found");
+  }
+});
+
 export const getUsers = asyncHandler(async (req, res) => {
   const users = await User.find({});
   if (users) {
     res.status(200).json(users);
+  }
+});
+
+export const deleteUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+
+  if (user) {
+    await user.remove();
+    res.status(200).json({ message: "user removed" });
+  } else {
+    res.status(404);
+    throw new Error("No users found");
   }
 });

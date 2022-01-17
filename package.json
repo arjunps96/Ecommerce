@@ -10,7 +10,8 @@
     "server": "nodemon backEnd/server",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "seeder:import": "nodemon backEnd/seeder",
-    "export": "nodemon backEnd/seeder -d"
+    "export": "nodemon backEnd/seeder -d",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
   },
   "author": "Arjun",
   "license": "ISC",
@@ -23,6 +24,7 @@
     "express-async-handler": "^1.2.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.13",
+    "multer": "^1.4.4",
     "nodemon": "^2.0.15"
   }
 }

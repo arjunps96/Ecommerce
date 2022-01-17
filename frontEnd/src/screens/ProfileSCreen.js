@@ -64,11 +64,11 @@ const ProfileScreen = ({ history }) => {
           <Form.Group controlId="name">
             <Form.Label>Name</Form.Label>
             <Form.Control
-              type="text"
+              type="name"
               placeholder="Enter the username"
-              onChange={(e) => setName(e.target.value)}
               value={name}
-            />
+              onChange={(e) => setName(e.target.value)}
+            ></Form.Control>
           </Form.Group>
 
           <Form.Group controlId="email">

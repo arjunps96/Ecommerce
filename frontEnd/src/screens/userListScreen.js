@@ -7,21 +7,23 @@ import Loader from "../components/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import AlertMessage from "../components/Alert";
 
-import { getAllUsers } from "../actions/userActions";
+import { getAllUsers, deleteUser } from "../actions/userActions";
 const UserListScreen = ({ history }) => {
   const dispatch = useDispatch();
   const userList = useSelector((state) => state.userList);
   const user = useSelector((state) => state.user);
   const { isLoading, users, error } = userList;
+  const userDelete = useSelector((state) => state.userDelete);
+  const { success } = userDelete;
   useEffect(() => {
     if (user.userInfo && user.userInfo.isAdmin) {
       dispatch(getAllUsers());
     } else {
       history.push("/sign-in");
     }
-  }, [dispatch, user, history]);
+  }, [dispatch, user, history, success]);
   const deleteHandler = (id) => {
-    console.log("delete");
+    dispatch(deleteUser(id));
   };
   return (
     <>
@@ -56,7 +58,7 @@ const UserListScreen = ({ history }) => {
                   )}
                 </td>
                 <td>
-                  <LinkContainer to={`/user/${user._id}/edit`}>
+                  <LinkContainer to={`/admin/user/${user._id}/edit`}>
                     <Button variant="light" className="btn-sm">
                       <i className="fas fa-edit"></i>
                     </Button>
