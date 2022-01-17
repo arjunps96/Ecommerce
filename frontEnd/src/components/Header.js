@@ -1,9 +1,12 @@
 import React from "react";
 import { Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
+
 import { LinkContainer } from "react-router-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { userLogout } from "../actions/userActions";
-const Header = ({ history }) => {
+import SearchBox from "./SearchBox";
+import { Route } from "react-router-dom";
+const Header = () => {
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.user);
 
@@ -18,7 +21,9 @@ const Header = ({ history }) => {
           <LinkContainer to="/">
             <Navbar.Brand>Proshop</Navbar.Brand>
           </LinkContainer>
+
           <Nav className="ml-auto">
+            <Route render={({ history }) => <SearchBox history={history} />} />
             <LinkContainer to="/cart">
               <Nav.Link>
                 {" "}
@@ -49,8 +54,12 @@ const Header = ({ history }) => {
                 <LinkContainer to="/admin/users">
                   <NavDropdown.Item>Users</NavDropdown.Item>
                 </LinkContainer>
-
-                <NavDropdown.Item>delete</NavDropdown.Item>
+                <LinkContainer to="/admin/products">
+                  <NavDropdown.Item>Products</NavDropdown.Item>
+                </LinkContainer>
+                <LinkContainer to="/admin/orders">
+                  <NavDropdown.Item>Orders</NavDropdown.Item>
+                </LinkContainer>
               </NavDropdown>
             )}
           </Nav>

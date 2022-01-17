@@ -2,49 +2,55 @@ import React,{useEffect,} from 'react';
 
 
 import Products from '../components/Product';
-import { Row,Col } from 'react-bootstrap';
+import ProductCarousel from "./ProductCarousel";
+import { Row, Col, Button } from "react-bootstrap";
 
+import Paginate from "../components/Paginate";
 
+import { getAllproducts } from "../actions/productActions";
+import { useDispatch, useSelector } from "react-redux";
 
-import {getAllproducts} from '../actions/productActions';
-import { useDispatch,useSelector } from 'react-redux';
+import Loader from "../components/Loader";
+import Alert from "../components/Alert";
+import { Link } from "react-router-dom";
+import Meta from "../components/Meta";
 
-import Loader from '../components/Loader';
-import Alert from '../components/Alert';
+const HomeScreen = ({ match }) => {
+  const dispatch = useDispatch();
+  const productList = useSelector((state) => state.productList);
+  const keyword = match.params.keyword;
+  const pageNumber = Number(match.params.pageNumber) || 1;
 
-const HomeScreen = () => {
-    const dispatch = useDispatch();
-    const productList=useSelector(state=>state.productList);
+  const { loading, products, error, page, pages } = productList;
 
-    const {loading,products,error}=productList;
+  useEffect(() => {
+    dispatch(getAllproducts(keyword, pageNumber));
+  }, [dispatch, keyword, pageNumber]);
 
-    useEffect(()=>{
-        
-        dispatch(getAllproducts());
-
-        
-
-    },[dispatch])
-
-    return (
-        <>
-        <h1>Latest Products</h1>
-        {loading&&<Loader/>}
-        {error&&<Alert variant="danger">{error}</Alert>}
-        <Row>
-            
-            {products.map(product=>
-
+  return (
+    <>
+      <Meta />
+      {!keyword ? (
+        <ProductCarousel />
+      ) : (
+        <Link to="/">
+          <Button className="btn btn-light">Go Back</Button>
+        </Link>
+      )}
+      <h1>Latest Products</h1>
+      {loading && <Loader />}
+      {error && <Alert variant="danger">{error}</Alert>}
+      <Row>
+        {products &&
+          products.map((product) => (
             <Col key={product._id} sm={12} md={6} lg={4} l={2}>
-                <Products  products={product}/>
+              <Products products={product} />
             </Col>
-                )}
-            
-            
-        </Row>
-          
-        </>
-    )
-}
+          ))}
+      </Row>
+      <Paginate page={page} pages={pages} keyword={keyword ? keyword : ""} />
+    </>
+  );
+};
 
 export default HomeScreen

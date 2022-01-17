@@ -5,6 +5,11 @@ import {composeWithDevTools} from 'redux-devtools-extension';
 import {
   productReducer,
   productDetailsReducer,
+  productDeleteReducer,
+  productCreateReducer,
+  productEditReducer,
+  productCreateReviewReducer,
+  productTopReducer,
 } from "../reducers/productReducer";
 import {
   userReducer,
@@ -12,6 +17,8 @@ import {
   userDetailsReducer,
   userUpdateProfileReducer,
   userListReducer,
+  userDeleteReducer,
+  userUpdateReducer,
 } from "../reducers/userReducer";
 import thunk from "redux-thunk";
 import { cartReducer } from "../reducers/cartReducer";
@@ -20,21 +27,32 @@ import {
   orderDetailsReducer,
   orderPayReducer,
   ordermyListReducer,
+  orderAllReducer,
+  orderDeliverReducer,
 } from "../reducers/orderReducers";
 
 const reducer = combineReducers({
   productList: productReducer,
+  productDelete: productDeleteReducer,
+  productCreate: productCreateReducer,
+  productEdit: productEditReducer,
+  productcreateReview: productCreateReviewReducer,
+  productTop: productTopReducer,
   cart: cartReducer,
   productDetails: productDetailsReducer,
   user: userReducer,
   userRegister: userRegisterReducer,
   userDetails: userDetailsReducer,
   userUpdateProfile: userUpdateProfileReducer,
+  userUpdate: userUpdateReducer,
   userList: userListReducer,
+  userDelete: userDeleteReducer,
   orderItems: orderReducer,
   orderDetails: orderDetailsReducer,
   orderPay: orderPayReducer,
+  orderDeliver: orderDeliverReducer,
   orderMyList: ordermyListReducer,
+  orderAll: orderAllReducer,
 });
 const currentCartItems = localStorage.getItem("cartItems")
   ? JSON.parse(localStorage.getItem("cartItems"))
