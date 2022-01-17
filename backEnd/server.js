@@ -41,11 +41,7 @@ if (process.env.ENV === "production") {
   app.get("*", (req, res) =>
     res.sendFile(path.resolve(__dirname, "frontEnd", "build", "index.html"))
   );
-} else {
-  app.get("/", (req, res) => {
-    res.send("API is running....");
-  });
-}
+} 
 
 app.get("/api/paypal/clientId", async (req, res) => {
   const clientID = process.env.PAYPAL_CLIENT_ID;
