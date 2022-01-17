@@ -14,6 +14,7 @@ import OrderRoutes from "./routes/orderRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
 
 import { notFound, genralError } from "./middlewares/errorMiddleware.js";
+import nodemon from "nodemon";
 
 dotenv.config();
 
@@ -35,6 +36,16 @@ app.use("/api/uploads", uploadRoutes);
 
 const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
+if (process.env.ENV === "production") {
+  app.use(express.static(path.join(__dirname, "/frontEnd/build")));
+  app.get("*", (req, res) =>
+    res.sendFile(path.resolve(__dirname, "frontEnd", "build", "index.html"))
+  );
+} else {
+  app.get("/", (req, res) => {
+    res.send("API is running....");
+  });
+}
 
 app.get("/api/paypal/clientId", async (req, res) => {
   const clientID = process.env.PAYPAL_CLIENT_ID;
