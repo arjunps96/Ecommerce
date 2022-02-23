@@ -12,7 +12,7 @@ const Header = () => {
     <Nav className="ml-auto">
       <Nav.Link href="#home"> <i class="fas fa-shopping-cart"></i> 
           cart</Nav.Link>
-      <Nav.Link href="#features"><i class="fas fa-user"></i>sign in</Nav.Link>
+      <Nav.Link href="#features"><i class="fas fa-user"></i>Sign In and Register</Nav.Link>
       
     </Nav>
     </Container>
