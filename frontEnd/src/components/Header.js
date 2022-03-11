@@ -13,12 +13,12 @@ const Header = () => {
     </LinkContainer>
     <Nav className="ml-auto">
       <LinkContainer to="/cart">
-        <Nav.Link > <i class="fas fa-shopping-cart"></i> 
+        <Nav.Link > <i className="fas fa-shopping-cart"></i> 
           cart
         </Nav.Link>
       </LinkContainer>
       <LinkContainer to="#features">
-        <Nav.Link ><i class="fas fa-user"></i>sign in</Nav.Link>
+        <Nav.Link ><i className="fas fa-user"></i>sign in</Nav.Link>
       </LinkContainer>
       
     </Nav>
